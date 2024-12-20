@@ -18,7 +18,7 @@ Additionally, the `Association` class supports wrapping:
 
 ## Example
 
- ```
+ ```swift
 struct CustomStruct {}
 class CustomObject {}
 typealias Block = () -> Void
