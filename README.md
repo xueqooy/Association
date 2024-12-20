@@ -1,20 +1,6 @@
 # Association
 
-`Association` is a Swift library designed to dynamically associate values with objects at runtime. It provides various association policies and wrapping options, supporting both strong and weak references.
-
-## Introduction
-
-The `Association` class encapsulates the use of Objective-C runtime's associated objects feature, allowing dynamic property addition to objects. It supports the following association policies:
-
-- `assign`
-- `retainNonatomic`
-- `copyNonatomic`
-- `retain`
-- `copy`
-
-Additionally, the `Association` class supports wrapping:
-- `direct`
-- `weak`
+`Association` is a Swift library designed to dynamically associate values with objects at runtime.
 
 ## Usage Example
 
