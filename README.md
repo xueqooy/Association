@@ -12,7 +12,9 @@ The `Association` class encapsulates the use of Objective-C runtime's associated
 - `retain`
 - `copy`
 
-Additionally, the `Association` class supports **direct wrapping** and **weak reference wrapping**.
+Additionally, the `Association` class supports wrapping:
+- `direct`
+- `weak`
 
 ## Example
 
