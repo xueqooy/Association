@@ -2,11 +2,10 @@
 
 `Association` is a Swift library designed to dynamically associate values with objects at runtime.
 
-## Usage Example
+## At a Glance
 
-Here's how you can use the Association class in your Swift project:
+Extend UIView with an Associated object.
 
-### Extend UIView with an Associated Property
 ```swift
 import UIKit
 import Association
@@ -25,7 +24,7 @@ extension UIView {
 }
 ```
 
-### Comparison with Traditional Methods
+comparison with Traditional Method:
 
 ```swift
 import UIKit
@@ -45,7 +44,7 @@ extension UIView {
 }
 ```
 
-### And more
+### Tips and Tricks
 
 ```swift
 struct CustomStruct {}
