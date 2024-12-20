@@ -36,9 +36,18 @@ extension UIView {
     }
 
     var customObject: CustomObject? {
-        get { objc_getAssociatedObject(self, &Associations.customObjectKey) as? CustomObject }
+        get {
+            objc_getAssociatedObject(
+                self,
+                &Associations.customObjectKey
+            ) as? CustomObject
+        }
         set {
-            objc_setAssociatedObject(self, &Associations.customObjectKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(
+                self,
+                &Associations.customObjectKey,
+                newValue,
+               .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
 }
