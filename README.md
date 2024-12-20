@@ -4,13 +4,13 @@
 
 ## At a Glance
 
-Extend UIView with an Associated object.
+Extend UIView with an object.
+```swift
+class CustomObject {}
+```
 
 ```swift
-import UIKit
 import Association
-
-class CustomObject {}
 
 private let objectAssociation = Association<CustomObject>()
 
@@ -25,7 +25,6 @@ extension UIView {
 comparison with Traditional Method:
 
 ```swift
-import UIKit
 import ObjectiveC.runtime
 
 private var customObjectKey = "customObjectKey"
