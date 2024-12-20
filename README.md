@@ -67,7 +67,7 @@ private let weakObjectAssociation = Association<CustomObject>(wrap: .weak)
 // Since Swift 3, custom value types are converted to `SwiftValue` in Objective-C, so wrapping may not be required.
 static let structAssociation = Association<CustomStruct>(wrap: .direct)
 
-// Closures must be associated using `direct` wrapping.
+// Closures should be associated using `direct` wrapping.
 static let blockAssociation = Association<Block>(wrap: .direct)
 
 extension UIView {
