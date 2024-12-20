@@ -138,9 +138,9 @@ private class WeakBox<T> {
     var value: T? {
         _value as? T
     }
-
+ 
     private weak var _value: AnyObject?
-    
+  
     init(_ value: T) {
         self._value = value as AnyObject
     }
