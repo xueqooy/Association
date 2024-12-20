@@ -61,7 +61,7 @@ class CustomObject {}
 typealias Block = () -> Void
 
 extension UIView {
-    private struct Associations {
+    private enum Associations {
         // By default, no wrapping is used, which corresponds to `none`.
         static let objectAssociation = Association<CustomObject>()
 
