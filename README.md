@@ -12,11 +12,9 @@ import Association
 
 class CustomObject {}
 
-extension UIView {
-    private enum Associations {
-        static let objectAssociation = Association<CustomObject>()
-    }
+private let objectAssociation = Association<CustomObject>()
 
+extension UIView {
     var customObject: CustomObject? {
         get { Associations.objectAssociation[self] }
         set { Associations.objectAssociation[self] = newValue }
@@ -30,11 +28,9 @@ comparison with Traditional Method:
 import UIKit
 import ObjectiveC.runtime
 
-extension UIView {
-    private enum Associations {
-        static var customObjectKey = "customObjectKey"
-    }
+private var customObjectKey = "customObjectKey"
 
+extension UIView {
     var customObject: CustomObject? {
         get {
             objc_getAssociatedObject(
@@ -47,7 +43,8 @@ extension UIView {
                 self,
                 &Associations.customObjectKey,
                 newValue,
-               .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+               .OBJC_ASSOCIATION_RETAIN_NONATOMIC
+            )
         }
     }
 }
@@ -60,41 +57,39 @@ struct CustomStruct {}
 class CustomObject {}
 typealias Block = () -> Void
 
+// By default, no wrapping is used, which corresponds to `none`.
+private let objectAssociation = Association<CustomObject>()
+
+// Use `weak` wrapping for weakly referenced associative objects.
+private let weakObjectAssociation = Association<CustomObject>(wrap: .weak)
+
+// It is recommended to use `direct` wrapping for custom value types.
+// For types that can be bridged to Objective-C (e.g., String, Bool, Int), wrapping may not be necessary.
+// Since Swift 3, custom value types are converted to `SwiftValue` in Objective-C, so wrapping may not be required.
+static let structAssociation = Association<CustomStruct>(wrap: .direct)
+
+// Closures must be associated using `direct` wrapping.
+static let blockAssociation = Association<Block>(wrap: .direct)
+
 extension UIView {
-    private enum Associations {
-        // By default, no wrapping is used, which corresponds to `none`.
-        static let objectAssociation = Association<CustomObject>()
-
-        // Use `weak` wrapping for weakly referenced associative objects.
-        static let weakObjectAssociation = Association<CustomObject>(wrap: .weak)
-
-        // It is recommended to use `direct` wrapping for custom value types.
-        // For types that can be bridged to Objective-C (e.g., String, Bool, Int), wrapping may not be necessary.
-        // Since Swift 3, custom value types are converted to `SwiftValue` in Objective-C, so wrapping may not be required.
-        static let structAssociation = Association<CustomStruct>(wrap: .direct)
-    
-        // Closures must be associated using `direct` wrapping.
-        static let blockAssociation = Association<Block>(wrap: .direct)
-    }
-
     var customStruct: CustomStruct? {
-        get { Associations.structAssociation[self] }
-        set { Associations.structAssociation[self] = newValue }
+        get { structAssociation[self] }
+        set { structAssociation[self] = newValue }
     }
 
     var customObject: CustomObject? {
-        get { Associations.objectAssociation[self] }
-        set { Associations.objectAssociation[self] = newValue }
+        get { objectAssociation[self] }
+        set { objectAssociation[self] = newValue }
     }
 
     var weakCustomObject: CustomObject? {
-        get { Associations.weakObjectAssociation[self] }
-        set { Associations.weakObjectAssociation[self] = newValue }
+        get { weakObjectAssociation[self] }
+        set { weakObjectAssociation[self] = newValue }
     }
 
     var block: Block? {
-        get { Associations.blockAssociation[self] }
-        set { Associations.blockAssociation[self] = newValue }
+        get { blockAssociation[self] }
+        set { blockAssociation[self] = newValue }
     }
 }
 ```
