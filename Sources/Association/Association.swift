@@ -67,7 +67,6 @@ extension UIView {
 }
 ```
 */
-
 public class Association<T> {
     
     public enum Policy {
@@ -79,14 +78,19 @@ public class Association<T> {
     }
     
     public enum Wrap {
+        case none
         case direct
         case weak // Only used for class type
     }
     
     private let associationPolicy: objc_AssociationPolicy
-    private let wrap: Wrap?
+    private let wrap: Wrap
     
-    public init(policy: Policy = .retainNonatomic, wrap: Wrap? = .none) {
+    public init(policy: Policy = .retainNonatomic, wrap: Wrap = .none) {
+        if wrap == .weak {
+            assert(T.self is AnyClass, "Weak wrapping should be used for class type")
+        }
+        
         switch policy {
         case .assign:
             associationPolicy = .OBJC_ASSOCIATION_ASSIGN
@@ -135,6 +139,8 @@ public class Association<T> {
     }
 }
 
+/// `Association.T` does not have a generic constraint on `AnyObject`. For compatibility reasons, `WeakBox.T` does not add a generic constraint on `AnyObject` either.
+/// This allows any value type to be used, as `value as AnyObject` will not cause a compilation error, because any value type can be bridged into OBJC or wrapped into a SwiftValue reference type
 private class WeakBox<T> {
     var value: T? {
         _value as? T
