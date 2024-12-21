@@ -29,40 +29,39 @@ struct CustomStruct {}
 class CustomObject {}
 typealias Block = () -> Void
 
-extension UIView {
-    private struct Associations {
-        // The default is not to use wrap, that is, wrap to `none`
-        static let objectAssociation = Association<CustomObject>()
- 
-        // Using `weak` wrap for weakly referenced associative object
-        static let weakObjectAssociation = Association<CustomObject>(wrap: .weak)
- 
-        // It is recommended to use `direct` wrap for custom value types. For types that can be bridged to objc, such as String, Bool, Int, etc., Wrap may not be used
-        // However, after Swift3, the custom value type will be converted to `SwiftValue` in objc, and Wrap may not be used.
-        static let structAssociation = Association<CustomStruct>(wrap: .direct)
-                
-        // Associate closures must use `direct` wrap
-        static let blockAssociation = Association<Block>(wrap: .direct)
-    }
+// By default, no wrapping is used, which corresponds to `none`.
+private let objectAssociation = Association<CustomObject>()
 
+// Use `weak` wrapping for weakly referenced associative objects.
+private let weakObjectAssociation = Association<CustomObject>(wrap: .weak)
+
+// It is recommended to use `direct` wrapping for custom value types.
+// For types that can be bridged to Objective-C (e.g., String, Bool, Int), wrapping may not be necessary.
+// Since Swift 3, custom value types are converted to `SwiftValue` in Objective-C, so wrapping may not be required.
+private let structAssociation = Association<CustomStruct>(wrap: .direct)
+
+// Closures should be associated using `direct` wrapping.
+private let blockAssociation = Association<Block>(wrap: .direct)
+
+extension UIView {
     var customStruct: CustomStruct? {
-        get { Associations.structAssociation[self] }
-        set { Associations.structAssociation[self] = newValue }
+        get { structAssociation[self] }
+        set { structAssociation[self] = newValue }
     }
 
     var customObject: CustomObject? {
-        get { Associations.objectAssociation[self] }
-        set { Associations.objectAssociation[self] = newValue }
+        get { objectAssociation[self] }
+        set { objectAssociation[self] = newValue }
     }
 
     var weakCustomObject: CustomObject? {
-        get { Associations.weakObjectAssociation[self] }
-        set { Associations.weakObjectAssociation[self] = newValue }
+        get { weakObjectAssociation[self] }
+        set { weakObjectAssociation[self] = newValue }
     }
 
     var block: Block? {
-        get { Associations.blockAssociation[self] }
-        set { Associations.blockAssociation[self] = newValue }
+        get { blockAssociation[self] }
+        set { blockAssociation[self] = newValue }
     }
 }
 ```
@@ -145,9 +144,9 @@ private class WeakBox<T> {
     var value: T? {
         _value as? T
     }
-
+ 
     private weak var _value: AnyObject?
-    
+  
     init(_ value: T) {
         self._value = value as AnyObject
     }
