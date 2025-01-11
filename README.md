@@ -34,13 +34,13 @@ extension UIView {
         get {
             objc_getAssociatedObject(
                 self,
-                &Associations.customObjectKey
+                &customObjectKey
             ) as? CustomObject
         }
         set {
             objc_setAssociatedObject(
                 self,
-                &Associations.customObjectKey,
+                &customObjectKey,
                 newValue,
                .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )
